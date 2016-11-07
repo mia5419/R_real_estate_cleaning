@@ -14,21 +14,35 @@
 #data_new <- fix_data[2:row_count,]
 #View(data_new)
 #--------------------------------------------
-# 另存資料
+# saveFile
 # write.table(fix_data[2:row_count,], file = "fix_A_lvr_land_A.CSV", sep = ",", col.names = fix_data[1,]) 
-# 將資料輸出，指標要從 2 開始，
-# 指標 1 的部分要放到 col.names。
+# point start from 2
+# col.names start from 1
 #--------------------------------------------
-#讀XML檔案
+#Read XML file
 install.packages("XML")
 library(XML) 
-data <- xmlToDataFrame("./A_lvr_land_A.XML")
-View(data)
+dataS1 <- xmlToDataFrame("./A_lvr_land_A_2013_1.XML")
+dataS2 <- xmlToDataFrame("./A_lvr_land_A_2013_2.XML")
+dataS3 <- xmlToDataFrame("./A_lvr_land_A_2013_3.XML")
+dataS4 <- xmlToDataFrame("./A_lvr_land_A_2013_4.XML")
+data_year <- rbind(dataS1, dataS2, dataS3, dataS4)
+View(data_year)
 #--------------------------------------------
 #Add year
-year_arr <- matrix(2012, nrow = row_count-1, ncol = 1)
+#
+#nrow(data_year) 
+#ncol(data_year)
+#dim(data_year)
+#
+#NROW(na.omit(dataset)) #To count the data after omitting the NA
+#sum(complete.cases(dataset))
+
+row_count <- nrow(data_year)
+row_count
+year_arr <- matrix(2013, nrow = row_count, ncol = 1)
 View(year_arr)
-data_year <- cbind(data_new, year_arr)
+data_year <- cbind(data_year, year_arr)
 View(data_year)
-write.table(data_year[2:row_count-1,], file = "fix2012_A_lvr_land_A.CSV", sep = ",", col.names = data_year[1,]) 
+write.table(data_year[2:row_count-1,], file = "fix2013_A_lvr_land_A.CSV", sep = ",", col.names = data_year[1,]) 
 
